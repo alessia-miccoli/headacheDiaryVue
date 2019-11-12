@@ -3,14 +3,14 @@
     <form @submit.prevent="addHeadache">
         <div>
             <div class="form-elements">
-                <p>Start Date:</p>
-                <input type="date" v-model="startDate">
-                <p>End Date:</p>
-                <input type="date" v-model="endDate">
+                <p class="label">Start Date:</p><br>
+                <input type="date" v-model="startDate"><br>
+                <p class="label">End Date:</p><br>
+                <input type="date" v-model="endDate"><br>
             </div>
 
             <div class="form-elements">
-                <p>Type:</p>
+                <p class="label">Type:</p><br>
                 <select v-model="type">
                     <option value="Strong">Strong</option>
                     <option value="Medium" selected>Medium</option>
@@ -20,11 +20,11 @@
             
 
             <div class="form-elements">
-                <p>Additional comments: <br/>
-                <small>Was it a period of stress? Why?<br/>
+                <p class="label">Additional comments: </p>
+                <p><small>Was it a period of stress? Why?<br/>
                 Did you have any other syntoms?<br/>
-                If you are a female, were you in your period?<br/></small>
-                </p>
+                If you are a female, were you in your period?<br/><br/></small></p>
+                
                 <input type="text" v-model="comments"><br/><br/>
             </div>
         </div>
@@ -48,14 +48,19 @@ export default {
           type: 'Medium'
     }
   },
+//   computed: {
+//       isEmptyButtonVisible: function(){
+//           return ()
+//       }
+//   },
   methods: {
     addHeadache(){
-          const headache = {
-              comments: this.comments,
-              startDate: this.startDate,
-              endDate: this.endDate,
-              type: this.type
-          }
+        const headache = {
+            comments: this.comments,
+            startDate: this.startDate,
+            endDate: this.endDate,
+            type: this.type
+        }
         
         this.$emit('add-headache', headache);
 
@@ -73,8 +78,14 @@ export default {
 
 <style scoped>
     #form-delimiter{
-        border: 1px solid black;
+        border-radius: 5px;
         padding: 10px;
+        background-color: #A4C7D5;
+    }
+
+    .label{
+        color: #05668D;
+        font-weight: 600;
     }
 
     form, #form-delimiter{
@@ -87,6 +98,8 @@ export default {
     
     p{
       text-align: center;
+      margin: 0;
+      padding: 0;
     }
 
     form div{
@@ -100,4 +113,7 @@ export default {
         justify-content: center;
     }
 
+    small{
+        color: #427AA1;
+    }
 </style>

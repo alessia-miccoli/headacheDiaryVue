@@ -32,7 +32,24 @@ export default {
   #app{
     height: 100vh;
     margin: 0;
+    background-color: #EBF2FA;
+    overflow-x: hidden;
   }
 
+   button, input[type="submit"]{
+    background-color: #05668D;
+    color: #FCFAFA;
+    border: none;
+    outline: none;
+  }
 
+  button:hover, input[type="submit"]:hover{
+    cursor: pointer;
+    background-color: #427AA1;
+    color: #FCFAFA;
+  }
+
+  *{
+    font-family: 'Montserrat', sans-serif;
+  }
 </style>

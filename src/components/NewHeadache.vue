@@ -53,6 +53,17 @@ export default {
     justify-content: center;
   }
 
+  #open-form{
+    background-color: #05668D;
+    color: #FCFAFA;
+  }
+
+  #open-form:hover{
+    cursor: pointer;
+    background-color: #427AA1;
+    color: #FCFAFA;
+  }
+
   #form-container{
     flex-direction: column-reverse;
     height: 80vh;
