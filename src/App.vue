@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HeadacheList :headaches="headaches"/>
+    <NewHeadache @push-headache="addNewHeadache"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NewHeadache from './components/NewHeadache.vue'
+import HeadacheList from './components/HeadacheList.vue'
 
 export default {
   name: 'app',
+  data(){
+    return {
+      headaches: [ ]
+    }
+  },
   components: {
-    HelloWorld
+    NewHeadache,
+    HeadacheList
+  },
+  methods: {
+    addNewHeadache(headache){
+      this.headaches.push(headache);
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
