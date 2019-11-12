@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h1>Add new Headache</h1>
-    <button @click="buttonClick">{{ buttonText }}</button>
+  <div id="form-container">
+    <button id="open-form" @click="buttonClick">
+      <p id="button-text">{{ buttonText }}</p>
+    </button>
     <HeadacheForm @add-headache="formCompiled" :clicked="clicked"/>
   </div>
 </template>
@@ -38,5 +39,27 @@ export default {
 </script>
 
 <style scoped>
+  #open-form{
+    border-radius: 50%;
+    border: none;
+    width: 5vmin;
+    height: 5vmin;
+    outline: none;
+  }
 
+  #form-container, #open-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #form-container{
+    flex-direction: column-reverse;
+    height: 80vh;
+  }
+
+  #button-text{
+    margin: 0;
+    font-size: 25px;
+  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="headaches.length > 0" >
+  <div headache-list v-if="headaches.length > 0" >
       <div v-for="(headache, index) in headaches"  v-bind:key="index">
         <Headache :headache="headache" :index="index" />
       </div>
@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style scoped>
-
+   /* #headache-list{
+       
+   } */
 </style>
