@@ -19,7 +19,6 @@
                     <option value="Light">Light</option>
                 </select>
             </div>
-            
 
             <div class="form-elements">
                 <p class="label">Additional comments: </p>
@@ -31,8 +30,8 @@
             </div>
         </div>
         
-        
         <input class="button" type="submit" value="Aggiungi">
+        <p v-if="isStartBiggerThanEnd"><small class="error-message visible">End Date must be bigger than Start Date</small></p>
     </form>
     <button v-if="compiled" class="button" @click="resetAllFields">Empty all fields</button>
   </div>
@@ -49,7 +48,8 @@ export default {
           endDate: '',
           type: 'Medium',
           isStartDateNotInserted: false,
-          isEndDateNotInserted: false
+          isEndDateNotInserted: false,
+          isStartBiggerThanEnd: false
     }
   },
   computed: {
@@ -60,16 +60,20 @@ export default {
   methods: {
     addHeadache(){
         if((this.startDate!=='') && (this.endDate!=='')){
-            const headache = {
-            comments: this.comments,
-            startDate: this.startDate,
-            endDate: this.endDate,
-            type: this.type,
-         }
+            if(this.startDate < this.endDate){
+                const headache = {
+                comments: this.comments,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                type: this.type,
+              }
         
-            this.$emit('add-headache', headache);
+              this.$emit('add-headache', headache);
 
-            this.resetAllFields();
+              this.resetAllFields();
+            }else{
+              this.isStartBiggerThanEnd = true;
+            }
         }else if(this.startDate == ''){
             this.isStartDateNotInserted = true;
         }else{
@@ -83,7 +87,8 @@ export default {
         this.type = 'Medium',
         this.compiled = false,
         this.isStartDateNotInserted = false,
-        this.isEndDateNotInserted = false
+        this.isEndDateNotInserted = false,
+        this.isStartBiggerThanEnd = false
     }
   }
 }
