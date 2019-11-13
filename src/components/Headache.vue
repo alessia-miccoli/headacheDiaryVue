@@ -30,6 +30,11 @@ export default {
         color: #FCFAFA;
     }
 
+    #headache-container:hover{
+        cursor: pointer;
+        background-color: #5386A9;
+    }
+
     #headache-container div{
         padding: 10px;
         white-space: nowrap;

@@ -1,17 +1,17 @@
 <template>
-  <div id="form-delimiter" v-if="clicked">
-    <form @submit.prevent="addHeadache">
+  <div id="form-delimiter" v-if="clicked" >
+    <form @submit.prevent="addHeadache" >
         <div>
             <div class="form-elements">
                 <p class="label">Start Date:</p><br>
-                <input type="date" v-model="startDate"><br>
+                <input type="date" v-model="startDate" name="startDate"><br>
                 <p class="label">End Date:</p><br>
-                <input type="date" v-model="endDate"><br>
+                <input type="date" v-model="endDate" name="endDate"><br>
             </div>
 
             <div class="form-elements">
                 <p class="label">Type:</p><br>
-                <select v-model="type">
+                <select v-model="type" name="type">
                     <option value="Strong">Strong</option>
                     <option value="Medium" selected>Medium</option>
                     <option value="Light">Light</option>
@@ -25,14 +25,14 @@
                 Did you have any other syntoms?<br/>
                 If you are a female, were you in your period?<br/><br/></small></p>
                 
-                <input type="text" v-model="comments"><br/><br/>
+                <input type="text" v-model="comments" name="comments"><br/><br/>
             </div>
         </div>
         
         
         <input class="button" type="submit" value="Aggiungi">
     </form>
-    <button class="button" @click="resetAllFields">Empty all fields</button>
+    <button v-if="compiled" class="button" @click="resetAllFields">Empty all fields</button>
   </div>
 </template>
 
@@ -48,13 +48,18 @@ export default {
           type: 'Medium'
     }
   },
+  computed: {
+      compiled: function(){
+          return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!==''))
+      }
+  },
   methods: {
     addHeadache(){
         const headache = {
             comments: this.comments,
             startDate: this.startDate,
             endDate: this.endDate,
-            type: this.type
+            type: this.type,
         }
         
         this.$emit('add-headache', headache);
@@ -65,7 +70,8 @@ export default {
         this.comments = '',
         this.startDate = '',
         this.endDate = '',
-        this.type = 'Medium'
+        this.type = 'Medium',
+        this.compiled = false
     }
   }
 }

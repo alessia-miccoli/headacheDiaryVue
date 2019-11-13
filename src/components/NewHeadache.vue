@@ -4,6 +4,9 @@
       <p id="button-text">{{ buttonText }}</p>
     </button>
     <HeadacheForm @add-headache="formCompiled" :clicked="clicked"/>
+    <div v-if="!clicked">
+      <p id="add-text">Click on the "+" button to add a new Headache</p>
+    </div>
   </div>
 </template>
 
@@ -45,6 +48,11 @@ export default {
     width: 5vmin;
     height: 5vmin;
     outline: none;
+  }
+
+  #add-text{
+    font-weight: 600;
+    color: #05668D;
   }
 
   #form-container, #open-form{
