@@ -4,9 +4,11 @@
         <div>
             <div class="form-elements">
                 <p class="label">Start Date:</p><br>
-                <input type="date" v-model="startDate" name="startDate"><br>
-                <p class="label">End Date:</p><br>
-                <input type="date" v-model="endDate" name="endDate"><br>
+                <input type="date" v-model="startDate" name="startDate">
+                <small class="error-message" v-bind:class="{visible: isStartDateNotInserted}" >This field is required</small>
+                <br><p class="label">End Date:</p><br>
+                <input type="date" v-model="endDate" name="endDate">
+                <small class="error-message" v-bind:class="{visible: isEndDateNotInserted}"> This field is required</small>
             </div>
 
             <div class="form-elements">
@@ -45,7 +47,9 @@ export default {
           comments: '',
           startDate: '',
           endDate: '',
-          type: 'Medium'
+          type: 'Medium',
+          isStartDateNotInserted: false,
+          isEndDateNotInserted: false
     }
   },
   computed: {
@@ -55,23 +59,31 @@ export default {
   },
   methods: {
     addHeadache(){
-        const headache = {
+        if((this.startDate!=='') && (this.endDate!=='')){
+            const headache = {
             comments: this.comments,
             startDate: this.startDate,
             endDate: this.endDate,
             type: this.type,
-        }
+         }
         
-        this.$emit('add-headache', headache);
+            this.$emit('add-headache', headache);
 
-        this.resetAllFields();
+            this.resetAllFields();
+        }else if(this.startDate == ''){
+            this.isStartDateNotInserted = true;
+        }else{
+            this.isEndDateNotInserted = true;
+        }
     },
     resetAllFields(){
         this.comments = '',
         this.startDate = '',
         this.endDate = '',
         this.type = 'Medium',
-        this.compiled = false
+        this.compiled = false,
+        this.isStartDateNotInserted = false,
+        this.isEndDateNotInserted = false
     }
   }
 }
@@ -88,6 +100,16 @@ export default {
     .label{
         color: #05668D;
         font-weight: 600;
+    }
+
+    .error-message{
+        visibility: hidden;
+        color: red;
+        text-shadow: 1px 1px 1px white;
+    }
+
+    .visible{
+        visibility: visible;
     }
 
     form, #form-delimiter{
