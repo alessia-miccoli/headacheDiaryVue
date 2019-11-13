@@ -56,6 +56,7 @@ export default {
   #open-form{
     background-color: #05668D;
     color: #FCFAFA;
+    padding: 0;
   }
 
   #open-form:hover{

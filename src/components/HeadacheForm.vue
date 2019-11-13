@@ -48,11 +48,6 @@ export default {
           type: 'Medium'
     }
   },
-//   computed: {
-//       isEmptyButtonVisible: function(){
-//           return ()
-//       }
-//   },
   methods: {
     addHeadache(){
         const headache = {
@@ -80,7 +75,8 @@ export default {
     #form-delimiter{
         border-radius: 5px;
         padding: 10px;
-        background-color: #A4C7D5;
+        background-color: #EBF2FA;
+        box-shadow: 2px 2px 3px #D3E0E9;
     }
 
     .label{
@@ -115,5 +111,10 @@ export default {
 
     small{
         color: #427AA1;
+    }
+
+    input[type="date"], input[type="text"], select{
+        border: 1px solid #D3E0E9;
+        outline: none;
     }
 </style>

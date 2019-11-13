@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeadacheList :headaches="headaches"/>
+    <HeadacheList @remove-h='deleteHeadache' :headaches="headaches"/>
     <NewHeadache @push-headache="addNewHeadache"/>
   </div>
 </template>
@@ -23,6 +23,9 @@ export default {
   methods: {
     addNewHeadache(headache){
       this.headaches.push(headache);
+    },
+    deleteHeadache(index){
+      this.headaches.splice(index, 1);
     }
   }
 }
@@ -32,7 +35,7 @@ export default {
   #app{
     height: 100vh;
     margin: 0;
-    background-color: #EBF2FA;
+    background-color: #FCFAFA;
     overflow-x: hidden;
   }
 
@@ -41,6 +44,7 @@ export default {
     color: #FCFAFA;
     border: none;
     outline: none;
+    padding: 5px 10px;
   }
 
   button:hover, input[type="submit"]:hover{

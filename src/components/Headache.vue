@@ -5,7 +5,7 @@
     <div>Ended: {{headache.endDate}}</div>
     <div v-if="headache.comments !== ''">Comments: {{headache.comments}}</div>
     <div id="button-container">
-        <button id="remove">Remove</button>
+        <button @click="removeHeadache" id="remove">Remove</button>
     </div>
 </div>
 </template>
@@ -13,7 +13,12 @@
 <script>
 export default {
   name: 'Headache-Form',
-  props: ['headache', 'index']
+  props: ['headache', 'index'],
+  methods: {
+    removeHeadache(){
+        this.$emit('remove-headache', this.index);
+    }
+  }
 }
 </script>
 
