@@ -1,6 +1,6 @@
 <template>
   <div id="form-delimiter" v-if="clicked">
-      <v-form class="v-flex flex-column">
+      <v-form ref="form" class="v-flex flex-column">
         <div>
             <div class="date-picker-container">
                 <h4>Start Date:</h4>
@@ -37,13 +37,13 @@
         </v-textarea>
       </div>
 
-      <v-btn @click='addHeadache' color="primary">Add to list</v-btn>
+      <v-btn @click='validate' color="primary">Add to list</v-btn>
       <v-alert dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
           End Date must be bigger than Start Date
       </v-alert>
     </v-form>
     
-    <v-btn v-if="compiled" @click="resetAllField" color="secondary">Empty all fields</v-btn>
+    <v-btn v-if="compiled" @click="reset" color="secondary">Empty all fields</v-btn>
   </div>
 </template>
 
@@ -100,15 +100,15 @@ export default {
             this.isEndDateNotInserted = true;
         }
     },
-    resetAllFields(){
-        this.comments = '',
+    reset(){
         this.startDate = '',
         this.endDate = '',
-        this.type = 'Medium',
-        this.compiled = false,
-        this.isStartDateNotInserted = false,
-        this.isEndDateNotInserted = false,
-        this.isStartBiggerThanEnd = false
+        this.$refs.form.reset()
+    },
+    validate () {
+      if (this.$refs.form.validate()) {
+        this.addHeadache()
+      }
     }
  }
 }
