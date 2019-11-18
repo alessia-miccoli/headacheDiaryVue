@@ -8,7 +8,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-   count: 0
+    headaches: [ ]
+  },
+  mutations: {
+    addNewHeadache(state, headache){
+      state.headaches.push(headache);
+    },
+    deleteHeadache(state, index){
+      state.headaches.splice(index, 1);
+    }
   }
 })
 

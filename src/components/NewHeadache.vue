@@ -1,19 +1,19 @@
 <template>
   <div id="form-container">
-    <v-btn class="float-right" small v-if="clicked" fab color="primary" @click="buttonClick" v-on="on">
-      <v-icon>mdi-close</v-icon>
+    <v-btn class="float-right" v-if="clicked" fab x-small color="primary" @click="buttonClick" v-on="on">
+      <v-icon small>mdi-close</v-icon>
     </v-btn>
     <div v-else class="btn-container">
       <v-tooltip bottom>
       <template v-slot:activator="{ on }">
-        <v-btn fab color="primary" @click="buttonClick" v-on="on">
+        <v-btn fab color="primary" v-on="on" @click="buttonClick">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
       <span>Add New Headache</span>
       </v-tooltip>
     </div>
-    <HeadacheForm @add-headache="formCompiled" :clicked="clicked"/>
+    <HeadacheForm :clicked="clicked"/> <!--@add-headache="formCompiled"-->
   </div>
 </template>
 
@@ -34,9 +34,9 @@ export default {
     buttonClick(){
       this.clicked = !this.clicked
     },
-    formCompiled(headache){
-      this.$emit('push-headache', headache)
-    }
+    // formCompiled(headache){
+    //   this.$emit('push-headache', headache)
+    // }
   }
 }
 </script>

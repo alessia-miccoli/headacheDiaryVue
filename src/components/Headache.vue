@@ -1,16 +1,16 @@
 <template>
   <v-card>
-    <div @click="toggleHeadache" v-if="!toggledHeadache" id="headache-container">
+     <div v-if="!toggledHeadache" id="headache-container"> <!--@click="toggleHeadache" -->
         <div>Type: {{headache.type}}</div>
         <div>Started: {{headache.startDate}}</div>
         <div>Ended: {{headache.endDate}}</div>
         <div v-if="headache.comments !== ''">Comments: {{headache.comments}}</div>
         <div id="button-container">
-            <button @click="removeHeadache" id="remove">Remove</button>
+            <button id="remove" @click="removeHeadache">Remove</button>
         </div>
     </div>
     <div v-else>
-        <UpdateHeadache :headache="headache" :toggledHeadache="toggledHeadache" @toggle-headache="toggleHeadache"/>
+        <UpdateHeadache :headache="headache"/> <!--@toggle-headache="toggleHeadache"-->
     </div>
   </v-card>
 </template>
@@ -25,46 +25,22 @@ export default {
       UpdateHeadache
   },
   data(){
-      return {
-          toggledHeadache: false
-      }
+    return {
+        toggledHeadache: false
+    }
   },
   props: ['headache', 'index'],
   methods: {
     removeHeadache(){
-        this.$emit('remove-headache', this.index);
+        this.$store.commit('deleteHeadache', this.index);
     },
-    toggleHeadache(){
-        this.toggledHeadache = !this.toggledHeadache;
-    }
+    // toggleHeadache(){
+    //     this.toggledHeadache = !this.toggledHeadache;
+    // }
   }
 }
 </script>
 
 <style scoped>
-    /* #headache-container{
-        display: flex;
-    }
-
-    #headache-container:hover{
-        cursor: pointer;
-    }
-
-    #headache-container div{
-        padding: 10px;
-        white-space: nowrap;
-    }
-
-    #button-container{
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        margin: -10px;
-    }
-
-    button:hover{
-        background-color: #1B7397;
-        color: #FCFAFA;
-    } */
-
+    
 </style>

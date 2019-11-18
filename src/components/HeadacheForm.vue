@@ -7,7 +7,7 @@
                 <v-date-picker type="date" v-model="startDate" name="startDate"
                 show-current
                 />
-                <v-alert class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+                <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
                   This field is required
                 </v-alert>
             </div>
@@ -16,7 +16,7 @@
                 <v-date-picker type="date" v-model="endDate" name="startDate"
                 show-current
                 />
-                <v-alert class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+                <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
                   This field is required
                 </v-alert>
             </div>
@@ -37,38 +37,19 @@
         </v-textarea>
       </div>
 
-      <v-btn color="primary">Add to list</v-btn>
-      <v-alert v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
+      <v-btn @click='addHeadache' color="primary">Add to list</v-btn>
+      <v-alert dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
           End Date must be bigger than Start Date
       </v-alert>
     </v-form>
-    <!-- <form @submit.prevent="addHeadache">
-        <div>
-            
-            <div class="form-elements">
-                <p class="label">Type:</p><br>
-                <select v-model="type" name="type">
-                    <option value="Strong">Strong</option>
-                    <option value="Medium" selected>Medium</option>
-                    <option value="Light">Light</option>
-                </select>
-            </div>
-
-            <div class="form-elements">
-                <p class="label"><br/><br/></small></p>
-                
-                <v-textarea v-model="comments" name="comments"></v-textarea><br/><br/>
-            </div>
-        </div>
-        
-        <input class="button" type="submit" value="Aggiungi">
-        
-    </form> -->
+    
     <v-btn v-if="compiled" @click="resetAllField" color="secondary">Empty all fields</v-btn>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
 
   name: 'Headache-Form',
@@ -85,13 +66,14 @@ export default {
     }
   },
   computed: {
+      ...mapState(['headaches']),
       compiled: {
         get: function () {
             return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!==''))
         },
         //useless setter, just to avoid error in the console
-        set: function(computed){
-            this.computed = computed;
+        set: function(compiled){
+            this.compiled = compiled;
         }
       }
   },
@@ -106,7 +88,7 @@ export default {
                 type: this.type,
               }
         
-              this.$emit('add-headache', headache);
+              this.$store.commit('addNewHeadache', headache)
 
               this.resetAllFields();
             }else{
@@ -128,7 +110,7 @@ export default {
         this.isEndDateNotInserted = false,
         this.isStartBiggerThanEnd = false
     }
-  }
+ }
 }
 </script>
 
@@ -147,7 +129,8 @@ export default {
       justify-content: space-between;
     }
 
-    .date-picker-container *{
+    .date-picker-container *,
+    .fields-container *{
         margin: 1%;
     }
 
@@ -169,28 +152,12 @@ export default {
     
     p{
       text-align: center;
-      margin: 0;
-      padding: 0;
     }
 
     form div{
         display: flex;
-        padding: 20px;
+        padding: 2%;
     }
 
-    .form-elements{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    small{
-        color: #427AA1;
-    }
-
-    input[type="text"], select{
-        border: 1px solid #D3E0E9;
-        background-color: white;
-        outline: none;
-    }
+    
 </style>

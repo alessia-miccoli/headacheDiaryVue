@@ -6,8 +6,9 @@
       </v-app-bar>
     </div>
     <v-content class="d-flex flex-column justify-center align-center content">
-      <HeadacheList @remove-h='deleteHeadache' :headaches="headaches"/>
-      <NewHeadache @push-headache="addNewHeadache"/>
+      <HeadacheList/> <!--@remove-h='deleteHeadache'-->
+      <NewHeadache /> <!--@push-headache="addNewHeadache" -->
+
     </v-content>
     <v-footer class="d-flex justify-center">
       <small class="primary--text font-weight-black">Created By Alessia Miccoli</small>
@@ -18,24 +19,12 @@
 <script>
 import NewHeadache from './components/NewHeadache.vue'
 import HeadacheList from './components/HeadacheList.vue'
+
 export default {
   name: 'app',
-  data(){
-    return {
-      headaches: [ ]
-    }
-  },
   components: {
     NewHeadache,
     HeadacheList
-  },
-  methods: {
-    addNewHeadache(headache){
-      this.headaches.push(headache);
-    },
-    deleteHeadache(index){
-      this.headaches.splice(index, 1);
-    }
   }
 }
 </script>
