@@ -1,8 +1,11 @@
 <template>
-  <div headache-list v-if="headaches.length > 0" >
-      <div v-for="(headache, index) in headaches"  v-bind:key="index">
-        <Headache :headache="headache" :index="index" @remove-headache='removeHeadache'/>
-      </div>
+  <div v-if="headaches.length > 0" >
+        <v-tabs>
+          <v-tab v-for="headache in headaches" v-bind:key="headache.startDate">{{headache.startDate}} - {{headache.endDate}}</v-tab>
+          <v-tab-item v-for="(headache, index) in headaches" v-bind:key="index*100+1">
+            <Headache :headache="headache" :index="index" @remove-headache='removeHeadache'/>
+          </v-tab-item>
+        </v-tabs>
   </div>
 </template>
 

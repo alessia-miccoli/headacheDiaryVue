@@ -1,38 +1,53 @@
 <template>
-<div id="headache-container">
-    <div>Type: {{headache.type}}</div>
-    <div>Started: {{headache.startDate}}</div>
-    <div>Ended: {{headache.endDate}}</div>
-    <div v-if="headache.comments !== ''">Comments: {{headache.comments}}</div>
-    <div id="button-container">
-        <button @click="removeHeadache" id="remove">Remove</button>
+  <v-card>
+    <div @click="toggleHeadache" v-if="!toggledHeadache" id="headache-container">
+        <div>Type: {{headache.type}}</div>
+        <div>Started: {{headache.startDate}}</div>
+        <div>Ended: {{headache.endDate}}</div>
+        <div v-if="headache.comments !== ''">Comments: {{headache.comments}}</div>
+        <div id="button-container">
+            <button @click="removeHeadache" id="remove">Remove</button>
+        </div>
     </div>
-</div>
+    <div v-else>
+        <UpdateHeadache :headache="headache" :toggledHeadache="toggledHeadache" @toggle-headache="toggleHeadache"/>
+    </div>
+  </v-card>
 </template>
 
 <script>
+import UpdateHeadache from './UpdateHeadache';
+
 export default {
+  
   name: 'Headache-Form',
+  components: {
+      UpdateHeadache
+  },
+  data(){
+      return {
+          toggledHeadache: false
+      }
+  },
   props: ['headache', 'index'],
   methods: {
     removeHeadache(){
         this.$emit('remove-headache', this.index);
+    },
+    toggleHeadache(){
+        this.toggledHeadache = !this.toggledHeadache;
     }
   }
 }
 </script>
 
 <style scoped>
-    #headache-container{
+    /* #headache-container{
         display: flex;
-        border-bottom: 1px solid #05668D;
-        background-color: #427AA1;
-        color: #FCFAFA;
     }
 
     #headache-container:hover{
         cursor: pointer;
-        background-color: #5386A9;
     }
 
     #headache-container div{
@@ -50,6 +65,6 @@ export default {
     button:hover{
         background-color: #1B7397;
         color: #FCFAFA;
-    }
+    } */
 
 </style>

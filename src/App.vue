@@ -1,14 +1,23 @@
 <template>
-  <div id="app">
-    <HeadacheList @remove-h='deleteHeadache' :headaches="headaches"/>
-    <NewHeadache @push-headache="addNewHeadache"/>
-  </div>
+  <v-app id="app">
+    <div>
+      <v-app-bar color="primary">
+        <v-toolbar-title class="white--text">Headache Diary</v-toolbar-title>
+      </v-app-bar>
+    </div>
+    <v-content class="d-flex flex-column justify-center align-center content">
+      <HeadacheList @remove-h='deleteHeadache' :headaches="headaches"/>
+      <NewHeadache @push-headache="addNewHeadache"/>
+    </v-content>
+    <v-footer class="d-flex justify-center">
+      <small class="primary--text font-weight-black">Created By Alessia Miccoli</small>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
 import NewHeadache from './components/NewHeadache.vue'
 import HeadacheList from './components/HeadacheList.vue'
-
 export default {
   name: 'app',
   data(){
@@ -32,28 +41,7 @@ export default {
 </script>
 
 <style>
-  #app{
-    height: 100vh;
-    margin: 0;
-    background-color: #FCFAFA;
-    overflow-x: hidden;
-  }
-
-   button, input[type="submit"]{
-    background-color: #05668D;
-    color: #FCFAFA;
-    border: none;
-    outline: none;
-    padding: 5px 10px;
-  }
-
-  button:hover, input[type="submit"]:hover{
-    cursor: pointer;
-    background-color: #427AA1;
-    color: #FCFAFA;
-  }
-
-  *{
-    font-family: 'Montserrat', sans-serif;
+  .content{
+    margin: 2%;
   }
 </style>
