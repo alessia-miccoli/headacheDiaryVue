@@ -1,28 +1,35 @@
 <template>
-  <div id="form-delimiter" v-if="clicked">
-      <v-form ref="form" class="v-flex flex-column">
-        <div>
-            <div class="date-picker-container">
-                <h4>Start Date:</h4>
-                <v-date-picker type="date" v-model="startDate" name="startDate"
-                show-current
-                />
-                <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
-                  This field is required
-                </v-alert>
-            </div>
-            <div class="date-picker-container">
-                <h4>End Date:</h4>
-                <v-date-picker type="date" v-model="endDate" name="startDate"
-                show-current
-                />
-                <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
-                  This field is required
-                </v-alert>
-            </div>
+  <v-card id="form-delimiter" v-if="clicked">
+    <div class="close-btn-container">
+      <h1 class="primary--text">New Headache</h1>
+      <v-spacer></v-spacer>
+      <v-btn class="float-right" v-if="clicked" fab x-small color="primary" @click="closeForm" v-on="on">
+        <v-icon small>mdi-close</v-icon>
+      </v-btn>
+    </div>
+    <v-form ref="form" class="v-flex flex-column">
+      <div>
+        <div class="date-picker-container">
+            <h4>Start Date:</h4>
+            <v-date-picker flat type="date" v-model="startDate" name="startDate"
+            show-current
+            />
+            <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+              This field is required
+            </v-alert>
         </div>
+        <div class="date-picker-container">
+            <h4>End Date:</h4>
+            <v-date-picker type="date" v-model="endDate" name="startDate"
+            show-current
+            />
+            <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+              This field is required
+            </v-alert>
+        </div>
+      </div>
 
-        <div class="fields-container">
+      <div class="fields-container">
         <v-radio-group class="d-flex flex-start" v-model="type" :mandatory="true">
           <h4>Headache Type:</h4>
           <v-radio label="light" value="Light"></v-radio>
@@ -35,16 +42,16 @@
           solo
         >
         </v-textarea>
-      </div>
+    </div>
 
-      <v-btn @click='validate' color="primary">Add to list</v-btn>
-      <v-alert dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
-          End Date must be bigger than Start Date
-      </v-alert>
-    </v-form>
+    <v-btn @click='validate' color="primary">Add to list</v-btn>
+    <v-alert dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
+        End Date must be bigger than Start Date
+    </v-alert>
+  </v-form>
     
     <v-btn v-if="compiled" @click="reset" color="secondary">Empty all fields</v-btn>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -78,6 +85,9 @@ export default {
       }
   },
   methods: {
+    closeForm(){
+      this.$emit('close-form')
+    },
     addHeadache(){
         if((this.startDate!=='') && (this.endDate!=='')){
             if(this.startDate < this.endDate){
@@ -101,6 +111,9 @@ export default {
         }
     },
     reset(){
+        this.isStartDateNotInserted = false;
+        this.isEndDateNotInserted = false;
+        this.isStartBiggerThanEnd = false;
         this.startDate = '',
         this.endDate = '',
         this.$refs.form.reset()
@@ -121,6 +134,12 @@ export default {
         justify-content: center;
         align-items: center;
     }
+    
+    .close-btn-container{
+      width: 100%;
+      display: flex;
+      padding: 1%;
+    }
 
     .fields-container{
       display: flex;
@@ -129,9 +148,14 @@ export default {
       justify-content: space-between;
     }
 
+    .date-picker-container,
+    .fields-container{
+        padding: 2%;
+    }
+
     .date-picker-container *,
     .fields-container *{
-        margin: 1%;
+        margin-bottom: 2%;
     }
 
     .error-message{
@@ -147,7 +171,7 @@ export default {
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
+        padding: 2%;
     }
     
     p{

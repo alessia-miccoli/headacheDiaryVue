@@ -1,9 +1,6 @@
 <template>
   <div id="form-container">
-    <v-btn class="float-right" v-if="clicked" fab x-small color="primary" @click="buttonClick" v-on="on">
-      <v-icon small>mdi-close</v-icon>
-    </v-btn>
-    <div v-else class="btn-container">
+    <div v-if="!clicked" class="btn-container">
       <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <v-btn fab color="primary" v-on="on" @click="buttonClick">
@@ -13,7 +10,7 @@
       <span>Add New Headache</span>
       </v-tooltip>
     </div>
-    <HeadacheForm :clicked="clicked"/> <!--@add-headache="formCompiled"-->
+    <HeadacheForm :clicked="clicked" @close-form="buttonClick"/> <!--@add-headache="formCompiled"-->
   </div>
 </template>
 
@@ -27,7 +24,7 @@ export default {
   },
   data(){        
       return {
-          clicked: false
+        clicked: false
       }
     },
   methods: {

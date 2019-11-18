@@ -5,10 +5,11 @@
         <v-toolbar-title class="white--text">Headache Diary</v-toolbar-title>
       </v-app-bar>
     </div>
+    <v-content>
+      <HeadacheList/>
+    </v-content>
     <v-content class="d-flex flex-column justify-center align-center content">
-      <HeadacheList/> <!--@remove-h='deleteHeadache'-->
-      <NewHeadache /> <!--@push-headache="addNewHeadache" -->
-
+      <NewHeadache />
     </v-content>
     <v-footer class="d-flex justify-center">
       <small class="primary--text font-weight-black">Created By Alessia Miccoli</small>
@@ -29,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .content{
     margin: 2%;
   }
