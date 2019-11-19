@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card outlined>
      <div v-if="!toggledHeadache"> <!--@click="toggleHeadache" -->
        <v-simple-table
         :dense="dense"
@@ -25,17 +25,11 @@
           </tbody>
         </template>
        </v-simple-table>
-       <div id="button-container">
-          <v-btn color="primary" id="remove" @click="removeHeadache">Remove</v-btn>
+       <div id="button-container" class="d-flex align-center justify-center">
+          <v-btn depressed color="primary" id="remove" @click="removeHeadache">Remove</v-btn>
        </div>
-        
-        <!-- <div>Type: {{headache.type}}</div>
-        <div>Started: {{headache.startDate}}</div>
-        <div>Ended: {{headache.endDate}}</div>
-        <div v-if="headache.comments !== ''">Comments: {{headache.comments}}</div>
-         -->
     </div>
-    <div v-else> <!-- v-else-->
+    <div v-else>
       <UpdateHeadache :headache="headache"/> <!--@toggle-headache="toggleHeadache"-->
     </div>
   </v-card>
@@ -68,5 +62,7 @@ export default {
 </script>
 
 <style scoped>
-    
+    #button-container{
+      padding: 2%;
+    }
 </style>

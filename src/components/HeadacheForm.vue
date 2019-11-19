@@ -1,9 +1,9 @@
 <template>
-  <v-card id="form-delimiter" v-if="clicked">
+  <v-card outlined id="form-delimiter" v-if="clicked">
     <div class="close-btn-container">
       <h1 class="primary--text">New Headache</h1>
       <v-spacer></v-spacer>
-      <v-btn class="float-right" v-if="clicked" fab x-small color="primary" @click="closeForm" v-on="on">
+      <v-btn depressed class="float-right" v-if="clicked" fab x-small color="primary" @click="closeForm" v-on="on">
         <v-icon small>mdi-close</v-icon>
       </v-btn>
     </div>
@@ -14,7 +14,7 @@
             <v-date-picker flat type="date" v-model="startDate" name="startDate"
             show-current
             />
-            <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+            <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
               This field is required
             </v-alert>
         </div>
@@ -23,7 +23,7 @@
             <v-date-picker type="date" v-model="endDate" name="startDate"
             show-current
             />
-            <v-alert dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+            <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isEndDateNotInserted}">
               This field is required
             </v-alert>
         </div>
@@ -39,18 +39,19 @@
 
         <v-textarea v-model="comments"
           label="Additional comments"
-          solo
+          outlined
         >
         </v-textarea>
     </div>
 
-    <v-btn @click='validate' color="primary">Add to list</v-btn>
-    <v-alert dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
+    <v-btn id="add-to-list" depressed @click='validate' color="primary">Add to list</v-btn>
+
+    <v-alert dense dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
         End Date must be bigger than Start Date
     </v-alert>
   </v-form>
     
-    <v-btn v-if="compiled" @click="reset" color="secondary">Empty all fields</v-btn>
+    <v-btn depressed v-if="compiled" @click="reset" color="primary">Empty all fields</v-btn>
   </v-card>
 </template>
 
@@ -129,16 +130,17 @@ export default {
 
 <style scoped>
     .date-picker-container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        display: inline-block;
     }
     
     .close-btn-container{
       width: 100%;
       display: flex;
       padding: 1%;
+    }
+    
+    #add-to-list{
+      margin-bottom: 2%;
     }
 
     .fields-container{
@@ -173,6 +175,10 @@ export default {
         align-items: center;
         padding: 2%;
     }
+
+    form{
+      padding-bottom: 0;
+    }
     
     p{
       text-align: center;
@@ -181,6 +187,11 @@ export default {
     form div{
         display: flex;
         padding: 2%;
+    }
+
+    .v-picker{
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: none;
     }
 
     
