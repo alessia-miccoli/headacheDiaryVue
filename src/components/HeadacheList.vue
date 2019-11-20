@@ -1,12 +1,23 @@
 <template>
-  <v-card outlined v-if="headaches.length > 0" >
-    <v-tabs>
-      <v-tab v-for="(headache, index) in headaches" v-bind:key="index*100+1" flat tile>{{headache.startDate}} ~ {{headache.endDate}}</v-tab>
-      <v-tab-item v-for="(headache, index) in headaches" v-bind:key="index*200+1" flat tile>
+<v-card outlined v-if="headaches.length > 0">
+  <v-card-title>Headache List</v-card-title>
+  <v-simple-table dense>
+    <template v-slot:default>
+    <thead>
+      <tr color="secondary">
+        <th class="text-left">Start Date</th>
+        <th class="text-left">End Date</th>
+        <th class="text-left">Type</th>
+        <th class="text-left">Comments</th>
+      </tr>
+    </thead>
+    
+      <tbody v-for="(headache, index) in headaches" v-bind:key="index*100+1">
         <Headache :headache="headache" :index="index"/>
-      </v-tab-item>
-    </v-tabs>
-  </v-card>
+      </tbody>
+    </template>
+  </v-simple-table>
+</v-card>
 </template>
 
 <script>

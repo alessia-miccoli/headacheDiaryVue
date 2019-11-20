@@ -5,7 +5,7 @@
         <v-toolbar-title class="white--text">Headache Diary</v-toolbar-title>
       </v-app-bar>
     </div>
-    <v-content>
+    <v-content class="d-flex">
       <HeadacheList/>
     </v-content>
     <v-content class="d-flex flex-column justify-center align-center content">
@@ -32,6 +32,6 @@ export default {
 
 <style scoped>
   .content{
-    margin: 2%;
+    margin: 2vmin;
   }
 </style>

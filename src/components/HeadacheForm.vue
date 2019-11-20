@@ -3,7 +3,7 @@
     <div class="close-btn-container">
       <h1 class="primary--text">New Headache</h1>
       <v-spacer></v-spacer>
-      <v-btn depressed class="float-right" v-if="clicked" fab x-small color="primary" @click="closeForm" v-on="on">
+      <v-btn depressed class="float-right" v-if="clicked" fab x-small color="primary" @click="closeForm">
         <v-icon small>mdi-close</v-icon>
       </v-btn>
     </div>
@@ -101,7 +101,7 @@ export default {
         
               this.$store.commit('addNewHeadache', headache)
 
-              this.resetAllFields();
+              this.reset();
             }else{
               this.isStartBiggerThanEnd = true;
             }
@@ -140,7 +140,7 @@ export default {
     }
     
     #add-to-list{
-      margin-bottom: 2%;
+      margin-bottom: 2vmin;
     }
 
     .fields-container{
@@ -152,12 +152,12 @@ export default {
 
     .date-picker-container,
     .fields-container{
-        padding: 2%;
+        padding: 2vmin;
     }
 
     .date-picker-container *,
     .fields-container *{
-        margin-bottom: 2%;
+        margin-bottom: 2vmin;
     }
 
     .error-message{
@@ -173,7 +173,7 @@ export default {
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        padding: 2%;
+        padding: 2vmin;
     }
 
     form{
@@ -186,7 +186,7 @@ export default {
 
     form div{
         display: flex;
-        padding: 2%;
+        padding: 2vmin;
     }
 
     .v-picker{
