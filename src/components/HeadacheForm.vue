@@ -11,7 +11,7 @@
       <div>
         <div class="date-picker-container">
             <h4>Start Date:</h4>
-            <v-date-picker flat type="date" v-model="startDate" name="startDate"
+            <v-date-picker type="date" v-model="startDate" name="startDate"
             show-current
             />
             <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
