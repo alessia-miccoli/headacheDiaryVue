@@ -8,15 +8,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    headaches: [ ]
-  },
-  mutations: {
-    addNewHeadache(state, headache){
-      state.headaches.push(headache);
-    },
-    deleteHeadache(state, index){
-      state.headaches.splice(index, 1);
-    }
+    headaches: [ ]  
   },
   getters: {
     getHeadacheByType: (state) => (type) => {
@@ -27,6 +19,17 @@ const store = new Vuex.Store({
     },
     getHeadacheByEndDate: (state) => (endDate) => {
       return state.headaches.filter(headache => headache.endDate === endDate)
+    },
+    getLastId: (state) => {
+      return state.headaches.length !== 0 ? state.headaches[state.headaches.length - 1].id : 0
+    }
+  },
+  mutations: {
+    addNewHeadache(state, headache){
+      state.headaches.push(headache);
+    },
+    deleteHeadache(state, id){
+      state.headaches.splice(state.headaches.findIndex(h => h.id == id), 1);
     }
   }
 })

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 
@@ -75,6 +75,7 @@ export default {
   },
   computed: {
       ...mapState(['headaches']),
+      ...mapGetters(['getLastId']),
       compiled: {
         get: function () {
             return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!==''))
@@ -97,6 +98,7 @@ export default {
                 startDate: this.startDate,
                 endDate: this.endDate,
                 type: this.type,
+                id: this.getLastId + 1
               }
         
               this.$store.commit('addNewHeadache', headache)

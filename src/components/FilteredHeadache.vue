@@ -1,27 +1,27 @@
 <template>
   <tr @click="toggleHeadache">
-    <td v-if="!toggledHeadache">{{headache.startDate}}</td>
+    <td v-if="!toggledHeadache">{{filteredHeadache.startDate}}</td>
     <td @click.stop v-else>
-      <input type="date" v-model="headache.startDate">
+      <input type="date" v-model="filteredHeadache.startDate">
     </td>
-    <td v-if="!toggledHeadache">{{headache.endDate}}</td>
+    <td v-if="!toggledHeadache">{{filteredHeadache.endDate}}</td>
     <td @click.stop v-else>
-      <input type="date" v-model="headache.endDate">
+      <input type="date" v-model="filteredHeadache.endDate">
     </td>
-    <td v-if="!toggledHeadache">{{headache.type}}</td>
+    <td v-if="!toggledHeadache">{{filteredHeadache.type}}</td>
     <td @click.stop v-else>
-      <v-radio-group class="d-flex flex-start" v-model="headache.type" :mandatory="true">
+      <v-radio-group class="d-flex flex-start" v-model="filteredHeadache.type" :mandatory="true">
           <v-radio label="light" value="Light"></v-radio>
           <v-radio label="medium" value="Medium"></v-radio>
           <v-radio label="strong" value="Strong"></v-radio>
         </v-radio-group>
     </td>
-    <td v-if="!toggledHeadache">{{headache.comments}}</td>
+    <td v-if="!toggledHeadache">{{filteredHeadache.comments}}</td>
     <td @click.stop v-else>
-      <v-textarea v-model="headache.comments"></v-textarea>
+      <v-textarea v-model="filteredHeadache.comments"></v-textarea>
     </td>
     <td v-if="!toggledHeadache">        
-      <v-btn outlined color="primary" id="remove" @click.stop="removeHeadache">Remove</v-btn></td>
+      <v-btn outlined color="primary" id="remove" @click.stop="removeFilteredHeadache">Remove</v-btn></td>
     <td v-else>
       <v-btn outlined color="primary" id="remove" @click.stop="toggleHeadache">Save</v-btn>
     </td>
@@ -38,10 +38,10 @@ export default {
         toggledHeadache: false
     }
   },
-  props: ['headache'],
+  props: ['filteredHeadache'],
   methods: {
-    removeHeadache(){
-        this.$store.commit('deleteHeadache', this.headache.id);
+    removeFilteredHeadache(){
+        this.$emit('delete-filtered', this.filteredHeadache.id)
     },
     toggleHeadache(){
         this.toggledHeadache = !this.toggledHeadache;
