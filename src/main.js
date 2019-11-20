@@ -17,6 +17,17 @@ const store = new Vuex.Store({
     deleteHeadache(state, index){
       state.headaches.splice(index, 1);
     }
+  },
+  getters: {
+    getHeadacheByType: (state) => (type) => {
+      return state.headaches.filter(headache => headache.type.toLowerCase() === type.toLowerCase())
+    },
+    getHeadacheByStartDate: (state) => (startDate) => {
+      return state.headaches.filter(headache => headache.startDate === startDate)
+    },
+    getHeadacheByEndDate: (state) => (endDate) => {
+      return state.headaches.filter(headache => headache.endDate === endDate)
+    }
   }
 })
 

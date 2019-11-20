@@ -10,7 +10,7 @@
       <span>Add New Headache</span>
       </v-tooltip>
     </div>
-    <HeadacheForm :clicked="clicked" @close-form="buttonClick"/> <!--@add-headache="formCompiled"-->
+    <HeadacheForm :clicked="clicked" @close-form="buttonClick"/>
   </div>
 </template>
 
@@ -30,10 +30,7 @@ export default {
   methods: {
     buttonClick(){
       this.clicked = !this.clicked
-    },
-    // formCompiled(headache){
-    //   this.$emit('push-headache', headache)
-    // }
+    }
   }
 }
 </script>

@@ -25,23 +25,14 @@
     <td v-else>
       <v-btn outlined color="primary" id="remove" @click.stop="toggleHeadache">Save</v-btn>
     </td>
-  <!-- <div v-else>
-    <UpdateHeadache :headache="headache" @click="toggleHeadache=!toggleHeadache"/>
-  </div> -->
-      <!-- <div id="button-container" class="d-flex align-center justify-center">
-      </div> -->
    </tr>  
 </template>
 
 <script>
-// import UpdateHeadache from './UpdateHeadache';
 
 export default {
   
   name: 'Headache-Form',
-  // components: {
-  //     UpdateHeadache
-  // },
   data(){
     return {
         toggledHeadache: false
