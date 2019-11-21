@@ -6,13 +6,14 @@
           label="Medicine Name">
         </v-text-field>
         <v-text-field
+          :rules="[rules.isNumber]"
           v-model="quantity"
           label="Quantity">
         </v-text-field>
-        <v-radio-group v-model="effective" :mandatory="false">
-            <v-radio label="Effective" value="true"></v-radio>
-            <v-radio label="Not Effective" value="false"></v-radio>
-      </v-radio-group>
+        <v-radio-group v-model="radio">
+            <v-radio label="Effective"></v-radio>
+            <v-radio label="Not Effective"></v-radio>
+        </v-radio-group>
         <v-btn fab color="primary" x-small @click="addToList">
         <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -34,24 +35,39 @@ export default {
     return {
       medicineName: '',
       quantity: '',
-      effective: false
+      radio: 0,
+      rules: {
+          isNumber: v => !isNaN(v) || 'please, insert numberic value'
+      }
     }
+  },
+  computed: {
+      effective: {
+        get: function(){
+          return (this.radio == 0 ? true : false)
+        },
+        //useless setter, just to avoid error in the console
+        set: function(effective){
+          this.effective = effective;
+        }
+      },
   },
   methods: {
     addToList(){
         if(this.medicineName !== '' && this.quantity != ''){
-            this.medicineList.push({ medicineName: this.medicineName, quantity: this.quantity})
+            this.medicineList.push({ 
+                medicineName: this.medicineName,
+                quantity: this.quantity,
+                effective: this.effective
+            })
             this.medicineName = '';
             this.quantity = '';
-            this.effective = false
+            this.effective = true
         }else{
             alert('error');
         }
     }
   }
-//   components: { 
-//     Medicine 
-//   }
 }
 </script>
 

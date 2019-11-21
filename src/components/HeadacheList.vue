@@ -82,7 +82,7 @@ export default {
 
         this.previousSearchTerm = this.searchTerm;
         this.searchTerm = '';
-        this.title="Results for: \"" + this.previousSearchTerm + "\""
+        this.title="Results for: "
       }      
     },
     deleteFiltered(id){
