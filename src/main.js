@@ -20,6 +20,17 @@ const store = new Vuex.Store({
     getHeadacheByEndDate: (state) => (endDate) => {
       return state.headaches.filter(headache => headache.endDate === endDate)
     },
+    getHeadacheByMedicine: (state) => (medicineName) => {
+      var filteredArray = []
+
+      for(var i=0; i<state.headaches.length; i++)
+        for(var x=0; x<state.headaches[i].medicineList.length; x++)
+            if(state.headaches[i].medicineList[x].medicineName == medicineName){
+              filteredArray.push(state.headaches[i]);
+              break
+            }
+      return filteredArray;    
+    },
     getLastId: (state) => {
       return state.headaches.length !== 0 ? state.headaches[state.headaches.length - 1].id : 0
     }

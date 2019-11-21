@@ -69,7 +69,8 @@ export default {
     ...mapGetters([
       'getHeadacheByType',
       'getHeadacheByStartDate',
-      'getHeadacheByEndDate'
+      'getHeadacheByEndDate',
+      'getHeadacheByMedicine'
     ])
   },
   methods: {
@@ -80,6 +81,8 @@ export default {
           this.filteredHeadaches = this.getHeadacheByStartDate(this.searchTerm)
         if(this.filteredHeadaches.length == 0)
           this.filteredHeadaches = this.getHeadacheByEndDate(this.searchTerm)
+        if(this.filteredHeadaches.length == 0)
+          this.filteredHeadaches = this.getHeadacheByMedicine(this.searchTerm)
 
         this.previousSearchTerm = this.searchTerm;
         this.searchTerm = '';
