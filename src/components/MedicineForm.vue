@@ -19,6 +19,18 @@
         </v-btn>
     </div>
     <Medicine :medicineList="medicineList"/>
+    <v-dialog v-model="openDialog"
+      max-width="290">
+      <v-card>
+        <v-card-title>Error</v-card-title>
+        <v-card-text>
+            You must provide medicine name, quantity and if it was effective or not.
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text color="primary" @click="openDialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -38,7 +50,8 @@ export default {
       radio: 0,
       rules: {
           isNumber: v => !isNaN(v) || 'please, insert numberic value'
-      }
+      },
+      openDialog: false
     }
   },
   computed: {
@@ -60,11 +73,12 @@ export default {
                 quantity: this.quantity,
                 effective: this.effective
             })
+
             this.medicineName = '';
             this.quantity = '';
             this.effective = true
         }else{
-            alert('error');
+            this.openDialog = true
         }
     }
   }
