@@ -9,10 +9,9 @@
         <p><b>Effective: </b>{{medicine.effective === true ? "yes" : "no"}}</p>
         <hr>
         <div class="btn-container">
-          <v-btn color="primary" outlined @click="removeMedicine">Remove</v-btn>
+          <v-btn color="primary" outlined @click="removeMedicine(index)">Remove</v-btn>
         </div>
     </v-list-item>
-    
   </v-list>
 </template>
 
@@ -21,8 +20,8 @@ export default {
   name: 'Medicine',
   props: ['medicineList'],
   methods: {
-    removeMedicine(){
-     alert(this.index)
+    removeMedicine(index){
+      return this.medicineList.splice(index,1)
     }
   }
 }
