@@ -43,11 +43,16 @@
         >
         </v-textarea>
     </div>
+    <v-switch
+      v-model="medicineTaken"
+      :label="`${medicineTakenLabel}`"
+    ></v-switch>
+    <MedicineForm :medicineTaken="medicineTaken" :medicineList="medicineList"/>
 
-    <v-btn id="add-to-list" depressed @click='validate' color="primary">Add to list</v-btn>
+    <v-btn id="add-to-list" depressed @click='validate' color="primary">Add headache to list</v-btn>
 
     <v-alert dense dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
-        End Date must be bigger than Start Date
+      End Date must be bigger than Start Date
     </v-alert>
   </v-form>
     
@@ -57,28 +62,43 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import MedicineForm from './MedicineForm'
 
 export default {
 
   name: 'Headache-Form',
   props: ['clicked'],
+  components: {
+    MedicineForm
+  },
   data(){        
     return {
-          comments: '',
-          startDate: '',
-          endDate: '',
-          type: 'Medium',
-          isStartDateNotInserted: false,
-          isEndDateNotInserted: false,
-          isStartBiggerThanEnd: false
+      comments: '',
+      startDate: '',
+      endDate: '',
+      type: 'Medium',
+      isStartDateNotInserted: false,
+      isEndDateNotInserted: false,
+      isStartBiggerThanEnd: false,
+      medicineTaken: false,
+      medicineList: []
     }
   },
   computed: {
+      medicineTakenLabel: {
+        get: function(){
+          return (this.medicineTaken ? "I took some medicine" : "I didn't take any medicine")
+        },
+        //useless setter, just to avoid error in the console
+        set: function(medicineTakenLabel){
+          this.medicineTakenLabel = medicineTakenLabel;
+        }
+      },
       ...mapState(['headaches']),
       ...mapGetters(['getLastId']),
       compiled: {
         get: function () {
-            return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!==''))
+            return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!=='') || (this.medicineTaken))
         },
         //useless setter, just to avoid error in the console
         set: function(compiled){
@@ -87,45 +107,53 @@ export default {
       }
   },
   methods: {
-    closeForm(){
-      this.$emit('close-form')
-    },
-    addHeadache(){
-        if((this.startDate!=='') && (this.endDate!=='')){
-            if(this.startDate < this.endDate){
-                const headache = {
-                comments: this.comments,
-                startDate: this.startDate,
-                endDate: this.endDate,
-                type: this.type,
-                id: this.getLastId + 1
-              }
-        
-              this.$store.commit('addNewHeadache', headache)
-
-              this.reset();
-            }else{
-              this.isStartBiggerThanEnd = true;
-            }
-        }else if(this.startDate == ''){
-            this.isStartDateNotInserted = true;
-        }else{
-            this.isEndDateNotInserted = true;
+  closeForm(){
+    this.$emit('close-form')
+  },
+  addHeadache(){
+      if((this.startDate!=='') && (this.endDate!=='')){
+        if(this.startDate < this.endDate){
+          const headache = {
+          comments: this.comments,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          type: this.type,
+          id: this.getLastId + 1,
+          medicineTaken: this.medicineTaken,
+          medicineList: this.medicineList
         }
-    },
-    reset(){
-        this.isStartDateNotInserted = false;
-        this.isEndDateNotInserted = false;
-        this.isStartBiggerThanEnd = false;
-        this.startDate = '',
-        this.endDate = '',
-        this.$refs.form.reset()
-    },
-    validate () {
-      if (this.$refs.form.validate()) {
-        this.addHeadache()
+
+        if((this.medicineTaken===false) && (this.medicineList !== [])){
+          headache.medicineList = [];
+        }
+      
+        this.$store.commit('addNewHeadache', headache)
+
+        this.reset();
+      }else{
+        this.isStartBiggerThanEnd = true;
       }
+    }else if(this.startDate == ''){
+        this.isStartDateNotInserted = true;
+    }else{
+        this.isEndDateNotInserted = true;
     }
+  },
+  reset(){
+      this.isStartDateNotInserted = false;
+      this.isEndDateNotInserted = false;
+      this.isStartBiggerThanEnd = false;
+      this.startDate = '',
+      this.endDate = '',
+      this.$refs.form.reset(),
+      this.medicineTaken = false,
+      this.medicineList = []
+  },
+  validate () {
+    if (this.$refs.form.validate()) {
+      this.addHeadache()
+    }
+  }
  }
 }
 </script>

@@ -2,6 +2,15 @@
 <v-card outlined v-if="headaches.length > 0">
   <v-app-bar flat>
     <v-toolbar-title>{{title}}</v-toolbar-title>
+    <v-chip v-if="previousSearchTerm!==''"
+        class="ma-2"
+        close
+        color="primary"
+        text-color="white"
+        @click:close="removeSearchTerm"
+      >
+        {{previousSearchTerm}}
+      </v-chip>
     <v-spacer></v-spacer>
     <v-text-field
       class="search-bar"
@@ -25,7 +34,7 @@
       <tbody v-show="previousSearchTerm==''" v-for="(headache) in headaches" v-bind:key="headache.id">
         <Headache :headache="headache"/>
       </tbody>
-      <tbody v-show="previousSearchTerm!==''" v-for="(filteredHeadache) in filteredHeadaches" v-bind:key="filteredHeadache.id*10">
+      <tbody v-show="previousSearchTerm!==''" v-for="(filteredHeadache) in filteredHeadaches" v-bind:key="filteredHeadache.id*1019">
         <FilteredHeadache :filteredHeadache="filteredHeadache" @delete-filtered="deleteFiltered"/>
       </tbody>
     </template>
@@ -77,9 +86,11 @@ export default {
       }      
     },
     deleteFiltered(id){
-      alert('id: ' + id)
       this.filteredHeadaches.splice(this.filteredHeadaches.findIndex(h => h.id == id), 1);
       this.$store.commit('deleteHeadache', id);
+    },
+    removeSearchTerm(){
+      this.previousSearchTerm = ''
     }
   }
 }
