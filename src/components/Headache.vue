@@ -18,7 +18,15 @@
     </td>
     <td v-if="!toggledHeadache">{{headache.comments}}</td>
     <td @click.stop v-else>
-      <v-textarea v-model="headache.comments"></v-textarea>
+      <v-text-field v-model="headache.comments"></v-text-field>
+    </td>
+    <td v-if="!toggledHeadache">
+      <p v-for="medicine in headache.medicineList" :key="medicine.medicineName">{{medicine.medicineName}}</p>
+    </td>
+    <td v-else>
+      <div v-for="medicine in headache.medicineList" :key="medicine.MedicineName">
+        <v-text-field @click.stop v-model="medicine.medicineName"></v-text-field>
+      </div>
     </td>
     <td v-if="!toggledHeadache">        
       <v-btn outlined color="primary" id="remove" @click.stop="removeHeadache">Remove</v-btn></td>
@@ -31,8 +39,7 @@
 <script>
 
 export default {
-  
-  name: 'Headache-Form',
+  name: 'Headache',
   data(){
     return {
         toggledHeadache: false
@@ -53,5 +60,9 @@ export default {
 <style scoped>
     #button-container{
       padding: 2vmin;
+    }
+
+    p{
+      margin: 0!important;
     }
 </style>

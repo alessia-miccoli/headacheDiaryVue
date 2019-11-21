@@ -1,5 +1,5 @@
 <template>
-  <div v-if="medicineTaken" class="d-flex flex-column">
+  <div v-if="medicineTaken" class="d-flex flex-column medicine-container">
     <div class=" d-flex align-center justify-center medicine-row">
         <v-text-field
           v-model="medicineName"
@@ -24,7 +24,7 @@
       <v-card>
         <v-card-title>Error</v-card-title>
         <v-card-text>
-            You must provide medicine name, quantity and if it was effective or not.
+          You must provide medicine name, quantity and if it was effective or not.
         </v-card-text>
         <v-card-actions>
           <v-btn text color="primary" @click="openDialog = false">OK</v-btn>
@@ -88,5 +88,12 @@ export default {
 <style scoped>
   .medicine-row *{
     margin-right: 2%;
+  }
+
+  .medicine-container{
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 2%;
+    margin-bottom: 2%;
   }
 </style>

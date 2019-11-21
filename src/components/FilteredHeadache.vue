@@ -17,8 +17,16 @@
         </v-radio-group>
     </td>
     <td v-if="!toggledHeadache">{{filteredHeadache.comments}}</td>
-    <td @click.stop v-else>
-      <v-textarea v-model="filteredHeadache.comments"></v-textarea>
+    <td v-else>
+      <v-text-field @click.stop v-model="filteredHeadache.comments"></v-text-field>
+    </td>
+    <td v-if="!toggledHeadache">
+      <p v-for="medicine in filteredHeadache.medicineList" :key="medicine.medicineName">{{medicine.medicineName}}</p>
+    </td>
+    <td v-else>
+      <div v-for="medicine in filteredHeadache.medicineList" :key="medicine.MedicineName">
+        <v-text-field @click.stop v-model="medicine.medicineName"></v-text-field>
+      </div>
     </td>
     <td v-if="!toggledHeadache">        
       <v-btn outlined color="primary" id="remove" @click.stop="removeFilteredHeadache">Remove</v-btn></td>

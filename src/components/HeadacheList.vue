@@ -28,6 +28,7 @@
           <th class="text-left">End Date</th>
           <th class="text-left">Type</th>
           <th class="text-left">Comments</th>
+          <th class="text-left">Medicine</th>
           <th class="text-left">Actions</th>
         </tr>
       </thead>
