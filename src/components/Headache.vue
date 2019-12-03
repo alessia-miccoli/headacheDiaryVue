@@ -42,16 +42,16 @@ export default {
   name: 'Headache',
   data(){
     return {
-        toggledHeadache: false
+      toggledHeadache: false
     }
   },
   props: ['headache'],
   methods: {
     removeHeadache(){
-        this.$store.commit('deleteHeadache', this.headache.id);
+      this.$store.commit('deleteHeadache', this.headache.id);
     },
     toggleHeadache(){
-        this.toggledHeadache = !this.toggledHeadache;
+      this.toggledHeadache = !this.toggledHeadache;
     }
   }
 }

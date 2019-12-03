@@ -25,10 +25,10 @@ const store = new Vuex.Store({
 
       for(var i=0; i<state.headaches.length; i++)
         for(var x=0; x<state.headaches[i].medicineList.length; x++)
-            if(state.headaches[i].medicineList[x].medicineName == medicineName){
-              filteredArray.push(state.headaches[i]);
-              break
-            }
+          if(state.headaches[i].medicineList[x].medicineName == medicineName){
+            filteredArray.push(state.headaches[i]);
+            break
+          }
       return filteredArray;    
     },
     getLastId: (state) => {

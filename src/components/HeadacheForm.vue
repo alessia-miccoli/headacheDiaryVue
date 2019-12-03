@@ -10,22 +10,22 @@
     <v-form ref="form" class="v-flex flex-column">
       <div>
         <div class="date-picker-container">
-            <h4>Start Date:</h4>
-            <v-date-picker type="date" v-model="startDate" name="startDate"
-            show-current
-            />
-            <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
-              This field is required
-            </v-alert>
+          <h4>Start Date:</h4>
+          <v-date-picker type="date" v-model="startDate" name="startDate"
+          show-current
+          />
+          <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isStartDateNotInserted}">
+            This field is required
+          </v-alert>
         </div>
         <div class="date-picker-container">
-            <h4>End Date:</h4>
-            <v-date-picker type="date" v-model="endDate" name="startDate"
-            show-current
-            />
-            <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isEndDateNotInserted}">
-              This field is required
-            </v-alert>
+          <h4>End Date:</h4>
+          <v-date-picker type="date" v-model="endDate" name="startDate"
+          show-current
+          />
+          <v-alert dense dismissible class="error-message" type="warning" v-bind:class="{visible: isEndDateNotInserted}">
+            This field is required
+          </v-alert>
         </div>
       </div>
 
@@ -42,19 +42,33 @@
           outlined
         >
         </v-textarea>
-    </div>
-    <v-switch
-      v-model="medicineTaken"
-      :label="`${medicineTakenLabel}`"
-    ></v-switch>
-    <MedicineForm :medicineTaken="medicineTaken" :medicineList="medicineList"/>
+      </div>
+      <v-switch
+        v-model="medicineTaken"
+        :label="`${medicineTakenLabel}`"
+      ></v-switch>
+      <MedicineForm :medicineTaken="medicineTaken" :medicineList="medicineList"/>
 
-    <v-btn id="add-to-list" depressed @click='validate' color="primary">Add headache to list</v-btn>
+      <v-btn id="add-to-list" depressed @click='validate' color="primary">Add headache to list</v-btn>
 
-    <v-alert dense dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
-      End Date must be bigger than Start Date
-    </v-alert>
-  </v-form>
+      <v-alert dense dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
+        End Date must be bigger than Start Date
+      </v-alert>
+    </v-form>
+    <v-dialog v-model="medicineFormCompiled"
+      max-width="290">
+      <v-card>
+        <v-card-title>Attention</v-card-title>
+        <v-card-text>
+          You have compiled the fields related to the medicine taken but didn't add the medicine to the list, are you sure
+          you want to proceed without adding it?
+        </v-card-text>
+        <v-card-actions @click="userResponse">
+          <v-btn text color="primary">PROCEED</v-btn>
+          <v-btn text color="primary">CANCEL</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     
     <v-btn depressed v-if="compiled" @click="reset" color="primary">Empty all fields</v-btn>
   </v-card>
@@ -81,7 +95,8 @@ export default {
       isEndDateNotInserted: false,
       isStartBiggerThanEnd: false,
       medicineTaken: false,
-      medicineList: []
+      medicineList: [],
+      medicineFormCompiled: false
     }
   },
   computed: {
@@ -98,11 +113,11 @@ export default {
       ...mapGetters(['getLastId']),
       compiled: {
         get: function () {
-            return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!=='') || (this.medicineTaken))
+          return ((this.comments!=='') || (this.startDate!=='') || (this.endDate!=='') || (this.medicineTaken))
         },
         //useless setter, just to avoid error in the console
         set: function(compiled){
-            this.compiled = compiled;
+          this.compiled = compiled;
         }
       }
   },
@@ -110,44 +125,57 @@ export default {
   closeForm(){
     this.$emit('close-form')
   },
-  addHeadache(){
-      if((this.startDate!=='') && (this.endDate!=='')){
-        if(this.startDate < this.endDate){
-          const headache = {
-          comments: this.comments,
-          startDate: this.startDate,
-          endDate: this.endDate,
-          type: this.type,
-          id: this.getLastId + 1,
-          medicineTaken: this.medicineTaken,
-          medicineList: this.medicineList
-        }
+  async addHeadache(){
+    if((this.startDate!=='') && (this.endDate!=='')){
+      if(this.startDate < this.endDate){
+        const headache = {
+        comments: this.comments,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        type: this.type,
+        id: this.getLastId + 1,
+        medicineTaken: this.medicineTaken,
+        medicineList: this.medicineList
+      }
 
-        if((this.medicineTaken===false) && (this.medicineList !== [])){
-          headache.medicineList = [];
-        }
+      if(this.medicineTaken == true && this.medicineList != []){
+        this.medicineFormCompiled = true;
+
+        //put function to trigger dialogue here
+       
+      }
+
+      if((this.medicineTaken == false) && (this.medicineList !== [])){
+        headache.medicineList = [];
+      }
+
+      this.$store.commit('addNewHeadache', headache)
+
+      this.reset();
       
-        this.$store.commit('addNewHeadache', headache)
-
-        this.reset();
       }else{
         this.isStartBiggerThanEnd = true;
       }
     }else if(this.startDate == ''){
-        this.isStartDateNotInserted = true;
+      this.isStartDateNotInserted = true;
     }else{
-        this.isEndDateNotInserted = true;
+      this.isEndDateNotInserted = true;
     }
   },
+  userResponse(e){
+    return new Promise(resolve => {
+      resolve(e.target.value);
+    });
+  },
   reset(){
-      this.isStartDateNotInserted = false;
-      this.isEndDateNotInserted = false;
-      this.isStartBiggerThanEnd = false;
-      this.startDate = '',
-      this.endDate = '',
-      this.$refs.form.reset(),
-      this.medicineTaken = false,
-      this.medicineList = []
+    this.isStartDateNotInserted = false;
+    this.isEndDateNotInserted = false;
+    this.isStartBiggerThanEnd = false;
+    this.startDate = '',
+    this.endDate = '',
+    this.$refs.form.reset(),
+    this.medicineTaken = false,
+    this.medicineList = []
   },
   validate () {
     if (this.$refs.form.validate()) {
