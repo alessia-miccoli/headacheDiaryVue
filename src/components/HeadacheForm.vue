@@ -47,8 +47,7 @@
         v-model="medicineTaken"
         :label="`${medicineTakenLabel}`"
       ></v-switch>
-      <MedicineForm :medicineTaken="medicineTaken" :medicineList="medicineList"/>
-
+      <MedicineForm :medicineTaken="medicineTaken" :medicineList="medicineList" @updated-fields="updateCurrentMedicineFields"/>
       <v-btn id="add-to-list" depressed @click='validate' color="primary">Add headache to list</v-btn>
 
       <v-alert dense dismissible v-if="isStartBiggerThanEnd" class="error-message visible" type="error">
@@ -96,7 +95,9 @@ export default {
       isStartBiggerThanEnd: false,
       medicineTaken: false,
       medicineList: [],
-      medicineFormCompiled: false
+      medicineFormCompiled: false,
+      currentMedicineName: '',
+      currentMedicineQuantity: null,
     }
   },
   computed: {
@@ -119,8 +120,12 @@ export default {
   closeForm(){
     this.$emit('close-form')
   },
+  updateCurrentMedicineFields(name, quantity){
+    this.currentMedicineName = name;
+    this.currentMedicineQuantity = quantity;
+  },
   checkFields(){
-    if(this.medicineTaken == true && this.medicineList != []){
+    if(this.medicineTaken == true && (this.currentMedicineName !== '' || this.currentMedicineQuantity)){
       this.medicineFormCompiled = true;
     } else {
       this.addHeadache();

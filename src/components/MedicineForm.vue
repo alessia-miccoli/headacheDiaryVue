@@ -46,7 +46,7 @@ export default {
   data(){
     return {
       medicineName: '',
-      quantity: '',
+      quantity: null,
       radio: 0,
       rules: {
         isNumber: v => !isNaN(v) || 'please, insert numberic value'
@@ -61,13 +61,12 @@ export default {
   },
   methods: {
     addToList(){
-      if(this.medicineName !== '' && this.quantity != ''){
+      if(this.medicineName !== '' && this.quantity !== null){
         this.medicineList.push({ 
           medicineName: this.medicineName,
           quantity: this.quantity,
           effective: this.effective
         })
-
         this.medicineName = '';
         this.quantity = '';
         this.effective = true;
@@ -75,6 +74,9 @@ export default {
         this.openDialog = true;
       }
     }
+  },
+  updated(){
+    this.$emit('updated-fields', this.medicineName, this.quantity);
   }
 }
 </script>
