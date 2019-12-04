@@ -49,7 +49,7 @@ import FilteredHeadache from './FilteredHeadache'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'Headache-List',
+  name: 'headache-list',
   components: {
       Headache,
       FilteredHeadache

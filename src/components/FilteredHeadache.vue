@@ -40,7 +40,7 @@
 
 export default {
   
-  name: 'Headache-Form',
+  name: 'filtered-form',
   data(){
     return {
         toggledHeadache: false

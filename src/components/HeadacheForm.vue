@@ -63,9 +63,9 @@
           You have compiled the fields related to the medicine taken but didn't add the medicine to the list, are you sure
           you want to proceed without adding it?
         </v-card-text>
-        <v-card-actions @click="userResponse">
-          <v-btn text color="primary">PROCEED</v-btn>
-          <v-btn text color="primary">CANCEL</v-btn>
+        <v-card-actions>
+          <v-btn text color="primary" @click="handleUserResponse">PROCEED</v-btn>
+          <v-btn text color="primary" @click="handleUserResponse">CANCEL</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -80,7 +80,7 @@ import MedicineForm from './MedicineForm'
 
 export default {
 
-  name: 'Headache-Form',
+  name: 'headache-form',
   props: ['clicked'],
   components: {
     MedicineForm
@@ -100,14 +100,8 @@ export default {
     }
   },
   computed: {
-      medicineTakenLabel: {
-        get: function(){
-          return (this.medicineTaken ? "I took some medicine" : "I didn't take any medicine")
-        },
-        //useless setter, just to avoid error in the console
-        set: function(medicineTakenLabel){
-          this.medicineTakenLabel = medicineTakenLabel;
-        }
+      medicineTakenLabel(){
+          return (this.medicineTaken ? "I took some medicine" : "I didn't take any medicine");
       },
       ...mapState(['headaches']),
       ...mapGetters(['getLastId']),
@@ -125,7 +119,31 @@ export default {
   closeForm(){
     this.$emit('close-form')
   },
-  async addHeadache(){
+  checkFields(){
+    if(this.medicineTaken == true && this.medicineList != []){
+      this.medicineFormCompiled = true;
+    } else {
+      this.addHeadache();
+    }
+  },
+  handleUserResponse(event){
+    if(event.target.innerText == 'PROCEED'){
+      this.addHeadache();
+      this.medicineFormCompiled = false;
+    } else {
+      this.medicineFormCompiled = false;
+    }
+  },
+  getUserResponse(e){
+    return new Promise((resolve, reject) => {
+      if(e.currentTarget.innerText == 'PROCEED'){
+        resolve();
+      } else {
+        reject();
+      }
+    })
+  },
+  addHeadache(){
     if((this.startDate!=='') && (this.endDate!=='')){
       if(this.startDate < this.endDate){
         const headache = {
@@ -136,13 +154,6 @@ export default {
         id: this.getLastId + 1,
         medicineTaken: this.medicineTaken,
         medicineList: this.medicineList
-      }
-
-      if(this.medicineTaken == true && this.medicineList != []){
-        this.medicineFormCompiled = true;
-
-        //put function to trigger dialogue here
-       
       }
 
       if((this.medicineTaken == false) && (this.medicineList !== [])){
@@ -162,11 +173,6 @@ export default {
       this.isEndDateNotInserted = true;
     }
   },
-  userResponse(e){
-    return new Promise(resolve => {
-      resolve(e.target.value);
-    });
-  },
   reset(){
     this.isStartDateNotInserted = false;
     this.isEndDateNotInserted = false;
@@ -179,7 +185,7 @@ export default {
   },
   validate () {
     if (this.$refs.form.validate()) {
-      this.addHeadache()
+      this.checkFields();
     }
   }
  }

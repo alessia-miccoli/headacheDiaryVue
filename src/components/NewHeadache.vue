@@ -18,7 +18,7 @@
 import HeadacheForm from './HeadacheForm.vue'
 
 export default {
-  name: 'New-Headache',
+  name: 'new-headache',
   components: {
     HeadacheForm
   },

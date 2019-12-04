@@ -39,7 +39,7 @@
 <script>
 
 export default {
-  name: 'Headache',
+  name: 'headache',
   data(){
     return {
       toggledHeadache: false

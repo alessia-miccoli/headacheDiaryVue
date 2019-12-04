@@ -38,7 +38,7 @@
 import Medicine from './Medicine' 
 
 export default {
-  name: 'Medicine-Form',
+  name: 'medicine-form',
   props: ['medicineTaken', 'medicineList'],
   components: {
     Medicine
@@ -55,15 +55,9 @@ export default {
     }
   },
   computed: {
-    effective: {
-      get: function(){
-        return (this.radio == 0 ? true : false)
-      },
-      //useless setter, just to avoid error in the console
-      set: function(effective){
-        this.effective = effective;
-      }
-    },
+    effective(){
+        return (this.radio == 0 ? true : false);
+    }
   },
   methods: {
     addToList(){
@@ -76,9 +70,9 @@ export default {
 
         this.medicineName = '';
         this.quantity = '';
-        this.effective = true
+        this.effective = true;
       }else{
-        this.openDialog = true
+        this.openDialog = true;
       }
     }
   }

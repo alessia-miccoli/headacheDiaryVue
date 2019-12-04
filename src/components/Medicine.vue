@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'Medicine',
+  name: 'medicine',
   props: ['medicineList'],
   methods: {
     removeMedicine(index){
