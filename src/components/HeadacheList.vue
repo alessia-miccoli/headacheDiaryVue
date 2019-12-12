@@ -20,7 +20,7 @@
       @keypress="search"
     ></v-text-field>
   </v-app-bar>
-  <v-simple-table>
+  <v-simple-table v-if="!noResult">
     <template v-slot:default>
       <thead>
         <tr color="secondary">
@@ -40,6 +40,9 @@
       </tbody>
     </template>
   </v-simple-table>
+  <h3 v-else>
+    No result found
+  </h3>
 </v-card>
 </template>
 
@@ -59,7 +62,8 @@ export default {
       filteredHeadaches: [],
       previousSearchTerm: '',
       searchTerm: '',
-      title: 'Headache List'
+      title: 'Headache List',
+      noResult: false
     }
   },
   computed: {
@@ -78,14 +82,22 @@ export default {
     search(e){
       if(e.keyCode === 13){
         this.filteredHeadaches = this.getHeadacheByType(this.searchTerm)
-        if(this.filteredHeadaches.length == 0)
+        if(this.filteredHeadaches.length == 0){
           this.filteredHeadaches = this.getHeadacheByStartDate(this.searchTerm)
-        if(this.filteredHeadaches.length == 0)
-          this.filteredHeadaches = this.getHeadacheByEndDate(this.searchTerm)
-        if(this.filteredHeadaches.length == 0)
-          this.filteredHeadaches = this.getHeadacheByMedicine(this.searchTerm)
-        if(this.filteredHeadaches.length == 0)
-          this.filteredHeadaches = this.getHeadacheByComments(this.searchTerm)
+          if(this.filteredHeadaches.length == 0){
+            this.filteredHeadaches = this.getHeadacheByEndDate(this.searchTerm)
+            if(this.filteredHeadaches.length == 0){
+              this.filteredHeadaches = this.getHeadacheByMedicine(this.searchTerm)
+              if(this.filteredHeadaches.length == 0){
+                this.filteredHeadaches = this.getHeadacheByComments(this.searchTerm)
+                if(this.filteredHeadaches.length == 0)
+                  this.noResult = true;
+                else
+                  this.noResult = false;
+              }
+            }
+          } 
+        }
 
         this.previousSearchTerm = this.searchTerm;
         this.searchTerm = '';
@@ -97,7 +109,8 @@ export default {
       this.$store.commit('deleteHeadache', id);
     },
     removeSearchTerm(){
-      this.previousSearchTerm = ''
+      this.previousSearchTerm = '';
+      this.noResult = false;
     }
   }
 }
@@ -106,6 +119,10 @@ export default {
 <style scoped>
   .search-bar{
     margin-top: 2vmin;
+  }
+
+  h3{
+    margin-left: 2vmin;
   }
    
 </style>
