@@ -150,7 +150,7 @@ export default {
   },
   addHeadache(){
     if((this.startDate!=='') && (this.endDate!=='')){
-      if(this.startDate < this.endDate){
+      if(this.startDate <= this.endDate){
         const headache = {
         comments: this.comments,
         startDate: this.startDate,
