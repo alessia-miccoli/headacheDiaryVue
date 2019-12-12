@@ -12,24 +12,27 @@ const store = new Vuex.Store({
   },
   getters: {
     getHeadacheByType: (state) => (type) => {
-      return state.headaches.filter(headache => headache.type.toLowerCase() === type.toLowerCase())
+      return state.headaches.filter(headache => headache.type.toLowerCase().includes(type.toLowerCase()))
     },
     getHeadacheByStartDate: (state) => (startDate) => {
-      return state.headaches.filter(headache => headache.startDate === startDate)
+      return state.headaches.filter(headache => (headache.startDate.includes(startDate)))
     },
     getHeadacheByEndDate: (state) => (endDate) => {
-      return state.headaches.filter(headache => headache.endDate === endDate)
+      return state.headaches.filter(headache => headache.endDate.includes(endDate))
+    },
+    getHeadacheByComments: (state) => (comments) => {
+      return state.headaches.filter(headache => headache.comments.toLowerCase().includes(comments.toLowerCase()))
     },
     getHeadacheByMedicine: (state) => (medicineName) => {
       var filteredArray = []
 
       for(var i=0; i<state.headaches.length; i++)
         for(var x=0; x<state.headaches[i].medicineList.length; x++)
-          if(state.headaches[i].medicineList[x].medicineName == medicineName){
+          if(state.headaches[i].medicineList[x].medicineName.includes(medicineName)){
             filteredArray.push(state.headaches[i]);
             break
           }
-      return filteredArray;    
+      return filteredArray; 
     },
     getLastId: (state) => {
       return state.headaches.length !== 0 ? state.headaches[state.headaches.length - 1].id : 0

@@ -70,7 +70,8 @@ export default {
       'getHeadacheByType',
       'getHeadacheByStartDate',
       'getHeadacheByEndDate',
-      'getHeadacheByMedicine'
+      'getHeadacheByMedicine',
+      'getHeadacheByComments',
     ])
   },
   methods: {
@@ -83,6 +84,8 @@ export default {
           this.filteredHeadaches = this.getHeadacheByEndDate(this.searchTerm)
         if(this.filteredHeadaches.length == 0)
           this.filteredHeadaches = this.getHeadacheByMedicine(this.searchTerm)
+        if(this.filteredHeadaches.length == 0)
+          this.filteredHeadaches = this.getHeadacheByComments(this.searchTerm)
 
         this.previousSearchTerm = this.searchTerm;
         this.searchTerm = '';
