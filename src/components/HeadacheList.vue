@@ -83,15 +83,15 @@ export default {
       if(e.keyCode === 13){
         this.searchTerm = this.searchTerm.trim();
         this.filteredHeadaches = this.getHeadacheByType(this.searchTerm)
-        if(this.filteredHeadaches.length == 0){
+        if(this.isFilteredHeadachesEmpty()){
           this.filteredHeadaches = this.getHeadacheByStartDate(this.searchTerm)
-          if(this.filteredHeadaches.length == 0){
+          if(this.isFilteredHeadachesEmpty()){
             this.filteredHeadaches = this.getHeadacheByEndDate(this.searchTerm)
-            if(this.filteredHeadaches.length == 0){
+            if(this.isFilteredHeadachesEmpty()){
               this.filteredHeadaches = this.getHeadacheByMedicine(this.searchTerm)
-              if(this.filteredHeadaches.length == 0){
+              if(this.isFilteredHeadachesEmpty()){
                 this.filteredHeadaches = this.getHeadacheByComments(this.searchTerm)
-                if(this.filteredHeadaches.length == 0)
+                if(this.isFilteredHeadachesEmpty())
                   this.noResult = true;
                 else
                   this.noResult = false;
@@ -109,6 +109,11 @@ export default {
       this.filteredHeadaches.splice(this.filteredHeadaches.findIndex(h => h.id == id), 1);
       this.$store.commit('deleteHeadache', id);
     },
+    isFilteredHeadachesEmpty(){
+      if(this.filteredHeadaches.length == 0)
+        return true;
+      return false;
+    },
     removeSearchTerm(){
       this.previousSearchTerm = '';
       this.noResult = false;
@@ -124,6 +129,7 @@ export default {
 
   h3{
     margin-left: 2vmin;
+    margin-bottom: 2vmin;
   }
    
 </style>
