@@ -81,6 +81,7 @@ export default {
   methods: {
     search(e){
       if(e.keyCode === 13){
+        this.searchTerm = this.searchTerm.trim();
         this.filteredHeadaches = this.getHeadacheByType(this.searchTerm)
         if(this.filteredHeadaches.length == 0){
           this.filteredHeadaches = this.getHeadacheByStartDate(this.searchTerm)
