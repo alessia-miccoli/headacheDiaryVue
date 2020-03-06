@@ -19,6 +19,7 @@
         <v-btn color="primary">Strong</v-btn>
       </div>
       <h3>Medicine(s) taken:</h3>
+      <MedicineList/>
       <div class="medicine-container">
         <div>
           <v-text-field
@@ -41,8 +42,13 @@
 </template>
 
 <script>
+import MedicineList from '../components/MedicineList'
+
 export default {
   name: 'new-headache-form-page',
+  components: {
+    MedicineList,
+  },
   data: ()=> ({
     startDate: '',
     endDate: '',
