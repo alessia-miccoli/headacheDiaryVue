@@ -1,8 +1,13 @@
 <template>
   <div>
     <v-app-bar color="primary">
-      <img class="logo" width="40px" src="@/assets/calendar.png"/>
+      <router-link to="/new-headache">
+        <img class="logo" width="40px" src="@/assets/calendar.png"/>
+      </router-link>
       <v-toolbar-title class="white--text">Headache Diary</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <router-link to="/headache-list"><v-btn outlined color="white">Go to list</v-btn></router-link>
+      
     </v-app-bar>
   </div>
 </template>
