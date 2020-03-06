@@ -1,6 +1,6 @@
 <template>
   <v-content>
-      HeadachesList
+    HeadachesList
   </v-content>
 </template>
 
