@@ -29,12 +29,12 @@
           ></v-text-field>
           <h4>Was it effective?</h4>
           <div class="d-flex align-center justify-space-around chips-container">
-            <v-chip color="primary">Yes</v-chip>
-            <v-chip color="primary">No</v-chip>
+            <v-chip @click="isEffective = true" :disabled="isEffective? true : false" color="primary">Yes</v-chip>
+            <v-chip @click="isEffective = false" :disabled="(isEffective == false && isEffective !== null) ? true : false" v-model="isEffective" color="primary">No</v-chip>
           </div>
         </div>
         <div class="d-flex align-center justify-center chips-container">
-          <v-btn depressed class="w-100" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+          <v-btn @click="addMedicineToList" depressed class="w-100" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
         </div>
       </div>
       <div class="d-flex align-center justify-space-around top-margin">
@@ -57,22 +57,19 @@ export default {
     startDate: '',
     endDate: '',
     medicineName: '',
-    isEffective: false,
-    medicines: [
-    // {
-    //   'name' : 'oki',
-    //   'isEffective': true
-    // },
-    // {
-    //   'name' : 'tachipirina',
-    //   'isEffective': false
-    // },
-    // {
-    //   'name' : 'ibuprofene',
-    //   'isEffective': false
-    // }
-    ],
-  })
+    isEffective: null,
+    medicines: [],
+  }),
+  methods: {
+    addMedicineToList(){
+      this.medicines.push({
+        name: this.medicineName,
+        isEffective: this.isEffective
+      });
+      this.medicineName = '',
+      this.isEffective = null
+    }
+  }
 }
 </script>
 
@@ -102,7 +99,7 @@ export default {
   }
 
   .half{
-    width: 50%;
+    width: calc(50% - 10px);
   }
 
   .top-margin{
@@ -110,10 +107,13 @@ export default {
   }
 
   .v-chip{
-    width: 25%;
     text-align: center;
     display: flex;
     justify-content: center;
+  }
+
+  .v-btn + .v-btn{
+    margin-left: 20px;
   }
 
 </style>
