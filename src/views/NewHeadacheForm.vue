@@ -13,13 +13,13 @@
         required
       ></v-text-field>
       <h3>Select Headache Intensity:</h3>
-      <div class="d-flex align-center justify-space-between btns-container">
-        <v-btn color="primary">Light</v-btn>
-        <v-btn color="primary">Medium</v-btn>
-        <v-btn color="primary">Strong</v-btn>
+      <div class="d-flex align-center justify-space-between chips-container">
+        <v-chip color="primary">Light</v-chip>
+        <v-chip color="primary">Medium</v-chip>
+        <v-chip color="primary">Strong</v-chip>
       </div>
       <h3>Medicine(s) taken:</h3>
-      <MedicineList/>
+      <MedicineList :medicines="medicines"/>
       <div class="medicine-container">
         <div>
           <v-text-field
@@ -28,14 +28,18 @@
             required
           ></v-text-field>
           <h4>Was it effective?</h4>
-          <div class="d-flex align-center justify-space-around btns-container">
-            <v-btn color="primary">Yes</v-btn>
-            <v-btn color="primary">No</v-btn>
+          <div class="d-flex align-center justify-space-around chips-container">
+            <v-chip color="primary">Yes</v-chip>
+            <v-chip color="primary">No</v-chip>
           </div>
         </div>
-        <div class="d-flex align-items-center justify-content-center btns-container">
-          <v-btn class="w-100" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+        <div class="d-flex align-center justify-center chips-container">
+          <v-btn depressed class="w-100" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
         </div>
+      </div>
+      <div class="d-flex align-center justify-space-around top-margin">
+        <v-btn depressed color="primary" class="half">Cancel</v-btn>
+        <v-btn depressed color="primary" class="half">Save</v-btn>
       </div>
     </div>
   </v-content>
@@ -52,7 +56,22 @@ export default {
   data: ()=> ({
     startDate: '',
     endDate: '',
-    medicineName: ''
+    medicineName: '',
+    isEffective: false,
+    medicines: [
+    // {
+    //   'name' : 'oki',
+    //   'isEffective': true
+    // },
+    // {
+    //   'name' : 'tachipirina',
+    //   'isEffective': false
+    // },
+    // {
+    //   'name' : 'ibuprofene',
+    //   'isEffective': false
+    // }
+    ],
   })
 }
 </script>
@@ -78,8 +97,23 @@ export default {
     border-radius: 5px;
   }
 
-  .btns-container{
+  .chips-container{
     margin-bottom: 20px;
+  }
+
+  .half{
+    width: 50%;
+  }
+
+  .top-margin{
+    margin-top: 20px;
+  }
+
+  .v-chip{
+    width: 25%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
 </style>
