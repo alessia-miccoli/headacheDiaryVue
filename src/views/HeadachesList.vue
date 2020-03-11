@@ -1,27 +1,11 @@
 <template>
   <v-content>
-    <div class="headache-list-container">
-      <table class="table">
-        <tr class="table-header">
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Medicines</th>
-        </tr>
-        <tr v-bind:key="headache.startDate" v-for="headache in headaches">
-          <td><div class="col">{{headache.startDate}}</div></td>
-          <td><div class="col">{{headache.endDate}}</div></td>
-          <td class="d-flex flex-column">
-            <div class="d-flex medicine-row" v-bind:key="medicine.name" v-for="medicine in headache.medicines">
-              <div class="col">{{medicine.name}}</div>
-              <div class="col">{{medicine.effective ? 'Effective' : 'Not Effective'}}</div>
-            </div>
-          </td>
-        </tr>
-      </table>
-      <div class="d-flex align-center justify-center button-container">
-        <v-btn depressed color="primary">Download Data</v-btn>
-      </div>
-    </div>
+    <v-data-table
+      :headers="headers"
+      :items="headaches"
+      :items-per-page="5"
+      class="elevation-1"
+    ></v-data-table>
   </v-content>
 </template>
 
@@ -30,6 +14,17 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'headache-list',
+  data: ()=>({
+    headers: [
+    {
+      text: 'Start Date',
+      value: 'startDate',
+    },
+    { text: 'End Date', value: 'endDate' },
+    { text: 'Intensity', value: 'intensity' },
+    { text: 'Medicines', value: 'medicines' },
+  ],
+  }),
   computed: {
     ...mapState({
       headaches: state => state.headaches.headaches
