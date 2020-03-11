@@ -5,7 +5,14 @@
       :items="headaches"
       :items-per-page="5"
       class="elevation-1"
-    ></v-data-table>
+    >
+    <template v-slot:item.medicines="{ item }">
+      <div class="medicine-container" v-for="medicine in item.medicines" :key="medicine.name" >
+        <div><b>{{medicine.name}}</b></div>
+        <div>{{medicine.effective ? 'effective' : 'not effective'}}</div>
+      </div>
+    </template>
+    </v-data-table>
   </v-content>
 </template>
 
@@ -18,11 +25,12 @@ export default {
     headers: [
     {
       text: 'Start Date',
+      align: 'center',
       value: 'startDate',
     },
-    { text: 'End Date', value: 'endDate' },
-    { text: 'Intensity', value: 'intensity' },
-    { text: 'Medicines', value: 'medicines' },
+    { text: 'End Date', align: 'center', value: 'endDate' },
+    { text: 'Intensity', align: 'center', value: 'intensity' },
+    { text: 'Medicines', align: 'center', value: 'medicines' },
   ],
   }),
   computed: {
@@ -33,44 +41,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .medicine-container{
+    display: flex;
+    justify-content: space-around;
+  }
 
-.table{
-  width: 100%;
-}
-
-.medicine-row div{
-  padding: 5px 20px;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.199);
-  text-align: center;
-}
-
-.col{
-  background-color: rgba(128, 128, 128, 0.185);
-  height: 100%;
-}
-
-
-tr, td{
-  text-align: center;
-}
-
-.table-header{
-  background-color: #5c6bc0;
-  color: white;
-}
-
-th{
-  padding: 20px 0;
-  width: 33%;
-}
-
-.headache-list-container{
-  padding: 20px;
-}
-
-.button-container{
-  width: 100%;
-  padding: 20px;
-}
+  .medicine-container {
+    div + div {
+      margin-left: 10px;
+    }
+  }
 </style>
