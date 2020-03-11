@@ -14,9 +14,9 @@
       ></v-text-field>
       <h3>Select Headache Intensity:</h3>
       <div class="d-flex align-center justify-space-between chips-container">
-        <v-chip color="primary">Light</v-chip>
-        <v-chip color="primary">Medium</v-chip>
-        <v-chip color="primary">Strong</v-chip>
+        <v-chip @click="intensity = 'Light'" :disabled="intensity == 'Light' ? true : false" color="primary">Light</v-chip>
+        <v-chip @click="intensity = 'Medium'" :disabled="intensity == 'Medium' ? true : false" color="primary">Medium</v-chip>
+        <v-chip @click="intensity = 'Strong'" :disabled="intensity == 'Strong' ? true : false" color="primary">Strong</v-chip>
       </div>
       <h3>Medicine(s) taken:</h3>
       <MedicineList :medicines="medicines"/>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="d-flex align-center justify-space-around top-margin">
-        <v-btn depressed color="primary" class="half">Cancel</v-btn>
+        <v-btn @click="cancel" color="primary" class="half">Cancel</v-btn>
         <v-btn depressed color="primary" class="half">Save</v-btn>
       </div>
     </div>
@@ -57,19 +57,30 @@ export default {
     startDate: '',
     endDate: '',
     medicineName: '',
+    intensity: '',
     isEffective: null,
     medicines: [],
   }),
   methods: {
     addMedicineToList(){
-      this.medicines.push({
+      if(this.medicineName !== ''){
+        this.medicines.push({
         name: this.medicineName,
         isEffective: this.isEffective
       });
       this.medicineName = '',
       this.isEffective = null
+      }
+    },
+    cancel(){
+      this.startDate='',
+      this.endDate='',
+      this.medicineName='',
+      this.intensity='',
+      this.isEffective=null,
+      this.medicines=[]
     }
-  }
+  },
 }
 </script>
 
