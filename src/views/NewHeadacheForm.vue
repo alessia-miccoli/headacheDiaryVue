@@ -39,7 +39,7 @@
       </div>
       <div class="d-flex align-center justify-space-around top-margin">
         <v-btn @click="cancel" color="primary" class="half">Cancel</v-btn>
-        <v-btn depressed color="primary" class="half">Save</v-btn>
+        <v-btn @click="save" color="primary" class="half">Save</v-btn>
       </div>
     </div>
   </v-content>
@@ -47,6 +47,7 @@
 
 <script>
 import MedicineList from '../components/MedicineList'
+import { mapActions } from 'vuex';
 
 export default {
   name: 'new-headache-form-page',
@@ -62,6 +63,9 @@ export default {
     medicines: [],
   }),
   methods: {
+    ...mapActions([
+      'addToList'
+    ]),
     addMedicineToList(){
       if(this.medicineName !== ''){
         this.medicines.push({
@@ -79,6 +83,16 @@ export default {
       this.intensity='',
       this.isEffective=null,
       this.medicines=[]
+    },
+    save(){
+      const headache = {
+        startDate: this.startDate,
+        endDate: this.endDate,
+        medicineName: this.medicineName,
+        intensity: this.intensity,
+        medicines: this.medicines,
+      }
+      this.addToList(headache);
     }
   },
 }
