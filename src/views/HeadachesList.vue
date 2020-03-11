@@ -1,7 +1,6 @@
 <template>
   <v-content>
-     <v-card>
-       {{search}}
+    <v-card>
       <v-card-title>
         Nutrition
         <v-spacer></v-spacer>
@@ -18,14 +17,14 @@
       :search="search"
       :items="headaches"
       :items-per-page="5"
-    >
+      >
       <template v-slot:item.medicines="{ item }">
         <div class="medicine-container" v-for="medicine in item.medicines" :key="medicine.name" >
           <div><b>{{medicine.name}}</b></div>
-          <div>{{medicine.effective ? 'effective' : 'not effective'}}</div>
+          <div>{{medicine.isEffective ? 'effective' : 'not effective'}}</div>
         </div>
       </template>
-    </v-data-table>
+      </v-data-table>
     </v-card>
   </v-content>
 </template>

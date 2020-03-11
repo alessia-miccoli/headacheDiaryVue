@@ -1,19 +1,5 @@
 const state = {
-  headaches: [
-  {
-    startDate: '20/02/2019',
-    endDate: '21/02/2019',
-    intensity: 'Strong',
-    medicines: [{
-      name: 'oki',
-      effective: true
-    },
-    {
-      name: 'tachipirina',
-      effective: false
-    }
-  ]}
-  ]
+  headaches: [ ]
 };
   
 const getters = {
