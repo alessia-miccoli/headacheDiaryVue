@@ -1,18 +1,32 @@
 <template>
   <v-content>
-    <v-data-table
+     <v-card>
+       {{search}}
+      <v-card-title>
+        Nutrition
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
       :headers="headers"
+      :search="search"
       :items="headaches"
       :items-per-page="5"
-      class="elevation-1"
     >
-    <template v-slot:item.medicines="{ item }">
-      <div class="medicine-container" v-for="medicine in item.medicines" :key="medicine.name" >
-        <div><b>{{medicine.name}}</b></div>
-        <div>{{medicine.effective ? 'effective' : 'not effective'}}</div>
-      </div>
-    </template>
+      <template v-slot:item.medicines="{ item }">
+        <div class="medicine-container" v-for="medicine in item.medicines" :key="medicine.name" >
+          <div><b>{{medicine.name}}</b></div>
+          <div>{{medicine.effective ? 'effective' : 'not effective'}}</div>
+        </div>
+      </template>
     </v-data-table>
+    </v-card>
   </v-content>
 </template>
 
@@ -22,6 +36,7 @@ import { mapState } from 'vuex';
 export default {
   name: 'headache-list',
   data: ()=>({
+    search: '',
     headers: [
     {
       text: 'Start Date',
