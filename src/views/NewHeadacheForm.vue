@@ -1,13 +1,15 @@
 <template>
   <v-content>
-    <div class="form-container">
+    <v-form class="form-container" ref="form">
       <h2>CREATE NEW HEADACHE</h2>
       <v-text-field
+        :rules="dateRule"
         v-model="startDate"
         label="Start Date, format: dd/mm/yyyy"
         required
       ></v-text-field>
       <v-text-field
+        :rules="dateRule"
         v-model="endDate"
         label="Start Date, format: dd/mm/yyyy"
         required
@@ -29,8 +31,8 @@
           ></v-text-field>
           <h4>Was it effective?</h4>
           <div class="d-flex align-center justify-space-around chips-container">
-            <v-chip @click="isEffective = true" :disabled="isEffective? true : false" color="primary">Yes</v-chip>
-            <v-chip @click="isEffective = false" :disabled="(isEffective == false && isEffective !== null) ? true : false" v-model="isEffective" color="primary">No</v-chip>
+            <v-chip @click="isEffective = true" :disabled="isEffective ? true : false" color="primary">Yes</v-chip>
+            <v-chip @click="isEffective = false" :disabled="(isEffective == false && isEffective !== null) ? true : false"  v-model="isEffective" color="primary">No</v-chip>
           </div>
         </div>
         <div class="d-flex align-center justify-center chips-container">
@@ -41,7 +43,7 @@
         <v-btn @click="cancel" color="primary" class="half">Cancel</v-btn>
         <v-btn @click="save" color="primary" class="half">Save</v-btn>
       </div>
-    </div>
+    </v-form>
   </v-content>
 </template>
 
@@ -61,6 +63,12 @@ export default {
     intensity: '',
     isEffective: null,
     medicines: [],
+    dateRule: [
+      v => !!v || 'This field is required',
+      v => /\d{2}\/\d{2}\/\d{4}/.test(v) || 'The date format is not correct',
+      v => parseInt(v.split("/")[0])<=31 || 'The day number should be between 01 and 31',
+      v => parseInt(v.split("/")[1])<=12 || 'The month number should be between 01 and 12'
+    ],
   }),
   methods: {
     ...mapActions([
@@ -69,20 +77,18 @@ export default {
     addMedicineToList(){
       if(this.medicineName !== ''){
         this.medicines.push({
-        name: this.medicineName,
-        isEffective: this.isEffective
-      });
-      this.medicineName = '',
-      this.isEffective = null
+          name: this.medicineName,
+          isEffective: this.isEffective
+        });
+        this.isEffective = null;
+        this.medicineName = '';
+        this.$forceUpdate();
       }
     },
     cancel(){
-      this.startDate='',
-      this.endDate='',
-      this.medicineName='',
-      this.intensity='',
-      this.isEffective=null,
-      this.medicines=[]
+      this.$refs.form.reset();
+      this.medicines = [];
+      this.isEffective = null;
     },
     save(){
       const headache = {
@@ -93,6 +99,7 @@ export default {
         medicines: this.medicines,
       }
       this.addToList(headache);
+      this.cancel();
     }
   },
 }
